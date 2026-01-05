@@ -12,10 +12,6 @@ the database on a single indexed (unique) field `short_url`.
 ```
 GET /api/v1/url?url=https://shrt.com/k93ng3lNTa
 Accept: application/json
-
-{
-  "url": "https://original-long-url.com"
-}
 ```
 
 Similarly, creating a short URL involves generating Base62 encoded string and performing `INSERT`.
