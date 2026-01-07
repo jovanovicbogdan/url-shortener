@@ -24,3 +24,16 @@ Content-Type: application/json
   "url": "https://original-long-url.com"
 }
 ```
+
+## TODO
+
+- [ ] switch to NoSQL database
+- [ ] request URL validation
+- [ ] improve exception handling
+- [ ] storage overflow with generating a short URL for the same URL
+- [ ] rate limiter
+- [ ] instead of Base62 use hashing algorithm, e.g. MurmurHash, CRC32
+- [ ] GET should be like this: https://localhost:8080/k93ng3lNTa
+- [ ] reduce the number of characters, see how goo.gl did it or bit.ly, e.g. tinyurl uses 8 chars
+- [ ] URL expiration
+- [ ] basic analytics
