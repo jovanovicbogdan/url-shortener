@@ -1,0 +1,10 @@
+### Create short URL
+POST http://localhost:8080/api/v1/url
+Content-Type: application/json
+
+{
+  "url": "https://longurlgoeshere.com"
+}
+
+### Short URL
+GET http://localhost:8080/F8aYmhaE2K

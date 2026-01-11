@@ -13,7 +13,8 @@ public class RetrieveUrlUseCase {
 
   private final UrlRepository urlRepository;
 
-  public String execute(final String shortUrl) {
+  public String execute(final String code) {
+    final var shortUrl = "https://shrt.com/" + code;
     final var url = urlRepository.findByShortUrl(shortUrl).orElseThrow(
         () -> {
           log.warn("Provided short URL '{}' doesn't exist.", shortUrl);

@@ -1,5 +1,12 @@
 package dev.bogdanjovanovic.urlshortener.controller.dto.request;
 
-public record CreateShortUrlRequest(String url) {
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.URL;
+
+public record CreateShortUrlRequest(
+    @URL
+    @NotNull
+    String url
+) {
 
 }

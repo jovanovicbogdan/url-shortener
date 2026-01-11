@@ -32,7 +32,7 @@ public class CreateShortUrlUseCase {
       log.error("Short URL '{}' already exists in the database.", shortUrl);
       throw new InternalServerErrorException();
     }
-    return shortUrl;
+    return code;
   }
 
 }
