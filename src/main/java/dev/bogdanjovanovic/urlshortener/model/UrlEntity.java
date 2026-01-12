@@ -12,7 +12,7 @@ public class UrlEntity {
 
   @Id
   private Long urlId;
-  private String url;
+  private String originalUrl;
   private String shortUrl;
 
 }

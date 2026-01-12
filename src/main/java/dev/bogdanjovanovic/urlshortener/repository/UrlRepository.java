@@ -10,4 +10,6 @@ public interface UrlRepository extends Repository<UrlEntity, Long> {
 
   Optional<UrlEntity> findByShortUrl(String shortUrl);
 
+  Optional<UrlEntity> findByOriginalUrl(String originalUrl);
+
 }

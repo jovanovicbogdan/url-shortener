@@ -4,17 +4,15 @@ import java.security.SecureRandom;
 import lombok.experimental.UtilityClass;
 
 /**
- * Base62 unique random 10-chars generator class
- * to be used as short URL ID. Currently, there
- * are 62<sup>10</sup> possible combinations
- * to generate Base62 character string. The possibility
- * of collision is very low.
+ * Base62 unique random 6-chars generator class to be used as short URL ID. Currently, there are
+ * 62<sup>6</sup> possible combinations to generate Base62 character string. The possibility of
+ * collision is very low.
  */
 @UtilityClass
 public class Base62Generator {
 
   private static final char[] BASE62_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
-  private static final int SEQ = 10;
+  private static final int SEQ = 6;
 
   private static final SecureRandom SECURE_RANDOM = new SecureRandom();
 

@@ -1,7 +1,9 @@
 DROP TABLE IF EXISTS url;
 
-CREATE TABLE IF NOT EXISTS url (
+CREATE TABLE url (
     url_id BIGSERIAL PRIMARY KEY,
-    url TEXT NOT NULL,
+    original_url TEXT NOT NULL,
     short_url VARCHAR(255) NOT NULL UNIQUE
 );
+
+CREATE INDEX idx_url_original_url ON url (original_url);
