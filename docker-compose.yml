@@ -11,13 +11,23 @@ services:
       POSTGRES_DB: url_shortener
       PG_DATA: /var/lib/postgresql/data/pgdata
 
-  redis:
+  redis-url:
     image: redis:8.4.0-alpine
-    container_name: redis
+    container_name: redis-url
     restart: unless-stopped
-    command: redis-server /usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis-url.conf
     ports:
       - "6379:6379"
+    volumes:
+      - ./redis:/usr/local/etc/redis
+
+  redis-counter:
+    image: redis:8.4.0-alpine
+    container_name: redis-counter
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis-counter.conf
+    ports:
+      - "6380:6379"
     volumes:
       - ./redis:/usr/local/etc/redis
 

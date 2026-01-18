@@ -1,4 +1,4 @@
-package dev.bogdanjovanovic.urlshortener.exception;
+package dev.bogdanjovanovic.urlshortener.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

@@ -1,6 +1,5 @@
-package dev.bogdanjovanovic.urlshortener.util;
+package dev.bogdanjovanovic.urlshortener.common.util;
 
-import java.security.SecureRandom;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -14,20 +13,32 @@ public class Base62Generator {
   private static final char[] BASE62_CHARS = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
   private static final int SEQ = 6;
 
-  private static final SecureRandom SECURE_RANDOM = new SecureRandom();
-
   public static String generate() {
     final var stringBuilder = new StringBuilder();
 
     var timestampFactor = System.currentTimeMillis();
     for (var i = 0; i < SEQ; i++) {
       stringBuilder.append(BASE62_CHARS[(int) (timestampFactor % BASE62_CHARS.length)]);
+      timestampFactor /= 62;
+    }
 
-      // increase entropy to the generated string to handle the case
-      // where the request lands at the exact same millisecond
-      var randomCharIndex = SECURE_RANDOM.nextInt(BASE62_CHARS.length);
-      randomCharIndex += 1;
-      timestampFactor /= randomCharIndex;
+    return stringBuilder.toString();
+  }
+
+  public static String generate(int input) {
+    if (input == 0) {
+      return "0";
+    }
+
+    if (input < 0) {
+      input = Math.abs(input);
+    }
+
+    final var stringBuilder = new StringBuilder();
+
+    while (input > 0) {
+      stringBuilder.append(BASE62_CHARS[input % BASE62_CHARS.length]);
+      input /= 62;
     }
 
     return stringBuilder.toString();

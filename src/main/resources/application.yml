@@ -14,3 +14,7 @@ logging:
   level:
     org.springframework.jdbc: trace
     dev.bogdanjovanovic: trace
+
+url:
+  redis:
+    counter-key: url:counter
