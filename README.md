@@ -63,9 +63,10 @@ instance is for storing counter configured to `fsync` every second as AOF.
 - [x] ~~Use Redis for caching~~
 - [x] ~~Request URL validation~~
 - [x] ~~Handle storage overflow with generating a short URL for the same URL~~
-- [ ] Add rate limiter
+- [x] ~~Add rate limiter~~
 - [x] ~~As an addition to Base62, hash original url first with e.g. MurmurHash or CRC~~
 - [x] ~~Reduce the number of characters, see how goo.gl did it or bit.ly, e.g. tinyurl uses 8
   chars~~
 - [x] ~~Add URL alias and expiration~~
+- [ ] Implement testing
 - [ ] Implement basic analytics
