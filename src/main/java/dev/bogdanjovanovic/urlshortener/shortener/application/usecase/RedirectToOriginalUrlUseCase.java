@@ -21,7 +21,7 @@ public class RedirectToOriginalUrlUseCase {
   private final CacheService cacheService;
 
   public RedirectToOriginalUrlUseCase(final UrlRepository urlRepository,
-      @Qualifier("redisUrlService") final CacheService cacheService) {
+      @Qualifier("redisLruService") final CacheService cacheService) {
     this.urlRepository = urlRepository;
     this.cacheService = cacheService;
   }

@@ -1,5 +1,8 @@
 package dev.bogdanjovanovic.urlshortener.shortener.application;
 
+import java.util.List;
+import java.util.function.Consumer;
+import redis.clients.jedis.AbstractTransaction;
 import redis.clients.jedis.params.SetParams;
 
 public interface CacheService {
@@ -13,5 +16,7 @@ public interface CacheService {
   Boolean exists(String key);
 
   Long incrAndGet(String key);
+
+  List<Object> multi(final Consumer<AbstractTransaction> transaction);
 
 }

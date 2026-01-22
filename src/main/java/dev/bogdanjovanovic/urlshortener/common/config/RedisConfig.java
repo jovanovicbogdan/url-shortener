@@ -9,16 +9,16 @@ import redis.clients.jedis.RedisClient;
 @Configuration
 public class RedisConfig {
 
-  @Bean("redisUrlClient")
-  public RedisClient redisUrlClient() {
+  @Bean("redisLruClient")
+  public RedisClient redisLruClient() {
     return RedisClient.builder()
         .hostAndPort("localhost", 6379)
         .poolConfig(defaultPoolConfig())
         .build();
   }
 
-  @Bean("redisCounterClient")
-  public RedisClient redisCounterClient() {
+  @Bean("redisAofClient")
+  public RedisClient redisAofClient() {
     return RedisClient.builder()
         .hostAndPort("localhost", 6380)
         .poolConfig(defaultPoolConfig())

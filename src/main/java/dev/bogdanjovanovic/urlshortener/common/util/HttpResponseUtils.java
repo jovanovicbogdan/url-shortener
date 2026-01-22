@@ -1,8 +1,10 @@
 package dev.bogdanjovanovic.urlshortener.common.util;
 
 import java.net.URI;
+import lombok.experimental.UtilityClass;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+@UtilityClass
 public class HttpResponseUtils {
 
   /**

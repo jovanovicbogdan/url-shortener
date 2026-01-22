@@ -1,6 +1,6 @@
 package dev.bogdanjovanovic.urlshortener;
 
-import dev.bogdanjovanovic.urlshortener.shortener.infrastructure.RedisUrlService;
+import dev.bogdanjovanovic.urlshortener.shortener.infrastructure.RedisLruService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -22,13 +22,13 @@ public class UrlShortenerApplication {
   }
 
   @Bean
-  CommandLineRunner runner(final RedisUrlService redisUrlService) {
+  CommandLineRunner runner(final RedisLruService redisLruService) {
     return _ -> {
-      if (redisUrlService.exists(counterKey)) {
+      if (redisLruService.exists(counterKey)) {
         return;
       }
 
-      final String result = redisUrlService.set(counterKey, "1");
+      final String result = redisLruService.set(counterKey, "1");
       if (result == null) {
         SpringApplication.exit(context, () -> 1);
       }
