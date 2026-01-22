@@ -54,10 +54,9 @@ The API first checks if the key is present in Redis with provided short URL. If 
 miss then go to the database (PostgreSQL) and fetch the original URL from there. Store in cache
 value retrieved from the database.
 
-There are two instances of Redis, one for storing short URLs and the other one for storing counter.
-
-For storing short URLs Redis is configured as LRU cache with the memory limit of 100MB. Once the
-limit is exceeded than evict least recently used keys.
+There are two instances of Redis. For storing short URLs Redis is configured as LRU cache with the
+memory limit of 100MB. Once the limit is exceeded than evict least recently used keys. Another
+instance is for storing counter configured to `fsync` every second as AOF.
 
 ## TODO
 

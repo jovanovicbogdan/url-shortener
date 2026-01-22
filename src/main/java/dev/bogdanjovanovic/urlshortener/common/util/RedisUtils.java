@@ -1,11 +1,13 @@
 package dev.bogdanjovanovic.urlshortener.common.util;
 
 import java.util.function.Supplier;
+import lombok.experimental.UtilityClass;
 import lombok.extern.slf4j.Slf4j;
 import redis.clients.jedis.exceptions.JedisConnectionException;
 import redis.clients.jedis.exceptions.JedisException;
 
 @Slf4j
+@UtilityClass
 public class RedisUtils {
 
   private static final int MAX_ATTEMPTS = 5;

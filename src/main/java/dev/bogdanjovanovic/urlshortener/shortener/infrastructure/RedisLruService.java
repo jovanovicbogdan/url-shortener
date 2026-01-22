@@ -2,19 +2,22 @@ package dev.bogdanjovanovic.urlshortener.shortener.infrastructure;
 
 import dev.bogdanjovanovic.urlshortener.shortener.application.CacheService;
 import dev.bogdanjovanovic.urlshortener.common.util.RedisUtils;
+import java.util.List;
+import java.util.function.Consumer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import redis.clients.jedis.AbstractTransaction;
 import redis.clients.jedis.RedisClient;
 import redis.clients.jedis.params.SetParams;
 
 @Slf4j
-@Service("redisUrlService")
-public class RedisUrlService implements CacheService {
+@Service("redisLruService")
+public class RedisLruService implements CacheService {
 
   private final RedisClient redisClient;
 
-  public RedisUrlService(@Qualifier("redisUrlClient") final RedisClient redisClient) {
+  public RedisLruService(@Qualifier("redisLruClient") final RedisClient redisClient) {
     this.redisClient = redisClient;
   }
 
@@ -41,6 +44,14 @@ public class RedisUrlService implements CacheService {
   @Override
   public Long incrAndGet(final String key) {
     return RedisUtils.executeWithBackoff(() -> redisClient.incr(key));
+  }
+
+  @Override
+  public List<Object> multi(final Consumer<AbstractTransaction> transaction) {
+    try(AbstractTransaction tx = redisClient.multi()) {
+      transaction.accept(tx);
+      return tx.exec();
+    }
   }
 
 }

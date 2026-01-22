@@ -30,7 +30,7 @@ public class CreateCounterBasedShortUrlUseCase {
   private final CreateShortUrlWithAliasUseCase createShortUrlWithAliasUseCase;
 
   public CreateCounterBasedShortUrlUseCase(final UrlRepository urlRepository,
-      @Qualifier("redisCounterService") final CacheService cacheService,
+      @Qualifier("redisAofService") final CacheService cacheService,
       final CreateShortUrlWithAliasUseCase createShortUrlWithAliasUseCase) {
     this.urlRepository = urlRepository;
     this.cacheService = cacheService;
