@@ -37,11 +37,6 @@ public class RedisLruService implements CacheService {
   }
 
   @Override
-  public Boolean exists(final String key) {
-    return RedisUtils.executeWithBackoff(() -> redisClient.exists(key));
-  }
-
-  @Override
   public Long incrAndGet(final String key) {
     return RedisUtils.executeWithBackoff(() -> redisClient.incr(key));
   }

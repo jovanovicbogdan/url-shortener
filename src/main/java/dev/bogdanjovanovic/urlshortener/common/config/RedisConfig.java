@@ -1,6 +1,7 @@
 package dev.bogdanjovanovic.urlshortener.common.config;
 
 import java.time.Duration;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.ConnectionPoolConfig;
@@ -9,10 +10,15 @@ import redis.clients.jedis.RedisClient;
 @Configuration
 public class RedisConfig {
 
+  @Value("${redis.lru.port}")
+  private Integer redisLruPort;
+  @Value("${redis.aof.port}")
+  private Integer redisAofPort;
+
   @Bean("redisLruClient")
   public RedisClient redisLruClient() {
     return RedisClient.builder()
-        .hostAndPort("localhost", 6379)
+        .hostAndPort("localhost", redisLruPort)
         .poolConfig(defaultPoolConfig())
         .build();
   }
@@ -20,7 +26,7 @@ public class RedisConfig {
   @Bean("redisAofClient")
   public RedisClient redisAofClient() {
     return RedisClient.builder()
-        .hostAndPort("localhost", 6380)
+        .hostAndPort("localhost", redisAofPort)
         .poolConfig(defaultPoolConfig())
         .build();
   }

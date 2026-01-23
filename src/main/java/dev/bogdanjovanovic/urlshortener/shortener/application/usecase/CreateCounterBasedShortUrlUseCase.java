@@ -20,7 +20,7 @@ import org.sqids.Sqids;
 @Service
 public class CreateCounterBasedShortUrlUseCase {
 
-  @Value("${url.redis.counter-key}")
+  @Value("${redis.aof.counter-key}")
   private String counterKey;
 
   private static final Sqids SQIDS = Sqids.builder().build();

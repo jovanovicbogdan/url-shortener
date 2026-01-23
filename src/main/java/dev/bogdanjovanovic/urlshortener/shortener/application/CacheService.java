@@ -13,8 +13,6 @@ public interface CacheService {
 
   String get(String key);
 
-  Boolean exists(String key);
-
   Long incrAndGet(String key);
 
   List<Object> multi(final Consumer<AbstractTransaction> transaction);
