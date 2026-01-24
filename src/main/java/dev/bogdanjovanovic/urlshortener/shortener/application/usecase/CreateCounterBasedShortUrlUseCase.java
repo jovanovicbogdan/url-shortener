@@ -42,8 +42,6 @@ public class CreateCounterBasedShortUrlUseCase {
       @Nullable final Instant expiresAt) {
     final var existingUrl = urlRepository.findByOriginalUrl(originalUrl);
 
-    existingUrl.ifPresent(url -> System.out.println(url.hasExpired()));
-
     if (existingUrl.isPresent() && !existingUrl.get().hasExpired()) {
       return HttpResponseUtils.buildLocationFromUrlPath(existingUrl.get().getShortUrl());
     }
