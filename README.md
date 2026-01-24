@@ -68,5 +68,5 @@ instance is for storing counter configured to `fsync` every second as AOF.
 - [x] ~~Reduce the number of characters, see how goo.gl did it or bit.ly, e.g. tinyurl uses 8
   chars~~
 - [x] ~~Add URL alias and expiration~~
-- [ ] Implement testing
+- [x] ~~Implement testing~~
 - [ ] Implement basic analytics
