@@ -14,7 +14,7 @@ public class Url {
 
   @Id
   private Long urlId;
-  private String originalUrl;
+  private Integer originalUrlHashCode;
   private String shortUrl;
   @Nullable
   private String alias;

@@ -38,16 +38,16 @@ public class CreateCounterBasedShortUrlUseCase {
   }
 
   @Transactional
-  public URI execute(final String originalUrl, @Nullable final String alias,
+  public URI execute(final int originalUrlHashCode, @Nullable final String alias,
       @Nullable final Instant expiresAt) {
-    final var existingUrl = urlRepository.findByOriginalUrl(originalUrl);
+    final var existingUrl = urlRepository.findByOriginalUrlHashCode(originalUrlHashCode);
 
     if (existingUrl.isPresent() && !existingUrl.get().hasExpired()) {
       return HttpResponseUtils.buildLocationFromUrlPath(existingUrl.get().getShortUrl());
     }
 
     if (alias != null) {
-      return createShortUrlWithAliasUseCase.execute(originalUrl, alias, expiresAt);
+      return createShortUrlWithAliasUseCase.execute(originalUrlHashCode, alias, expiresAt);
     }
 
     final var next = cacheService.incrAndGet(counterKey);
@@ -63,7 +63,7 @@ public class CreateCounterBasedShortUrlUseCase {
     final var shortUrl = HttpResponseUtils.buildLocationWithPath(code);
 
     urlRepository.save(Url.builder()
-        .originalUrl(originalUrl)
+        .originalUrlHashCode(originalUrlHashCode)
         .shortUrl(shortUrl.toString())
         .expiresAt(expiresAt)
         .build());

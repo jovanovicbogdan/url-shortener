@@ -43,7 +43,7 @@ public class RedirectToOriginalUrlUseCase {
       throw new BadRequestException();
     }
 
-    final var originalUrl = url.getOriginalUrl();
+    final var originalUrl = url.getOriginalUrlHashCode();
     final var remainingSeconds = Duration.between(Instant.now(), url.getExpiresAt()).getSeconds();
     final var params = SetParams.setParams().nx().ex(remainingSeconds);
     final var cacheOriginalUrl = cacheService.set(code, originalUrl, params);

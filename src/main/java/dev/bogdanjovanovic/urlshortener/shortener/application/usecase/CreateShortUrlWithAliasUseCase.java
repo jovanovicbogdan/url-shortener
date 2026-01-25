@@ -16,7 +16,7 @@ public class CreateShortUrlWithAliasUseCase {
 
   private final UrlRepository urlRepository;
 
-  public URI execute(final String originalUrl, final String alias,
+  public URI execute(final int originalUrlHashCode, final String alias,
       @Nullable final Instant expiresAt) {
     final var existingAliasUrl = urlRepository.findByAlias(alias);
     if (existingAliasUrl.isPresent()) {
@@ -24,7 +24,7 @@ public class CreateShortUrlWithAliasUseCase {
     }
     final var shortUrl = HttpResponseUtils.buildLocationWithPath(alias);
     urlRepository.save(Url.builder()
-        .originalUrl(originalUrl)
+        .originalUrlHashCode(originalUrlHashCode)
         .shortUrl(shortUrl.toString())
         .alias(alias)
         .expiresAt(expiresAt)

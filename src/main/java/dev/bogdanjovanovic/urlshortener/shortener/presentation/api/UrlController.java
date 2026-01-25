@@ -6,6 +6,7 @@ import dev.bogdanjovanovic.urlshortener.shortener.application.usecase.CreateHash
 import dev.bogdanjovanovic.urlshortener.shortener.application.usecase.RedirectToOriginalUrlUseCase;
 import dev.bogdanjovanovic.urlshortener.shortener.presentation.api.dto.request.CreateShortUrlRequest;
 import jakarta.validation.Valid;
+import java.net.URI;
 import java.time.Instant;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
@@ -35,7 +36,8 @@ public class UrlController {
   public ResponseEntity<?> createHashBasedShortUrl(
       @Valid @RequestBody final CreateShortUrlRequest request) {
     final var expiresAt = parseExpiresAt(request.expiresAt());
-    final var location = createHashBasedShortUrlUseCase.execute(request.url(), request.alias(),
+    final var uri = URI.create(request.url());
+    final var location = createHashBasedShortUrlUseCase.execute(uri.hashCode(), request.alias(),
         expiresAt);
     return ResponseEntity.created(location).build();
   }
@@ -44,7 +46,8 @@ public class UrlController {
   public ResponseEntity<?> createCounterBasedShortUrl(
       @Valid @RequestBody final CreateShortUrlRequest request) {
     final var expiresAt = parseExpiresAt(request.expiresAt());
-    final var location = createCounterBasedShortUrlUseCase.execute(request.url(), request.alias(),
+    final var uri = URI.create(request.url());
+    final var location = createCounterBasedShortUrlUseCase.execute(uri.hashCode(), request.alias(),
         expiresAt);
     return ResponseEntity.created(location).build();
   }

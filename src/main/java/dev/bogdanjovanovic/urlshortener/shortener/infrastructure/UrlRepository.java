@@ -10,7 +10,7 @@ public interface UrlRepository extends Repository<Url, Long> {
 
   Optional<Url> findByShortUrl(String shortUrl);
 
-  Optional<Url> findByOriginalUrl(String originalUrl);
+  Optional<Url> findByOriginalUrlHashCode(int originalUrlHashCode);
 
   Optional<Url> findByAlias(String alias);
 

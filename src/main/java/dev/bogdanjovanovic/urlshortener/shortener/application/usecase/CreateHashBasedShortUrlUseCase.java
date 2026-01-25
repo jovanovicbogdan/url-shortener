@@ -6,11 +6,9 @@ import dev.bogdanjovanovic.urlshortener.common.util.HttpResponseUtils;
 import dev.bogdanjovanovic.urlshortener.shortener.domain.Url;
 import dev.bogdanjovanovic.urlshortener.shortener.infrastructure.UrlRepository;
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 import java.time.Instant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.codec.digest.MurmurHash3;
 import org.jspecify.annotations.Nullable;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -25,22 +23,22 @@ public class CreateHashBasedShortUrlUseCase {
   private final CreateShortUrlWithAliasUseCase createShortUrlWithAliasUseCase;
 
   @Transactional
-  public URI execute(final String originalUrl, @Nullable final String alias,
+  public URI execute(final int originalUrlHashCode, @Nullable final String alias,
       @Nullable final Instant expiresAt) {
-    final var existingUrl = urlRepository.findByOriginalUrl(originalUrl);
+    final var existingUrl = urlRepository.findByOriginalUrlHashCode(originalUrlHashCode);
 
     if (existingUrl.isPresent() && !existingUrl.get().hasExpired()) {
       return HttpResponseUtils.buildLocationFromUrlPath(existingUrl.get().getShortUrl());
     }
 
     if (alias != null) {
-      return createShortUrlWithAliasUseCase.execute(originalUrl, alias, expiresAt);
+      return createShortUrlWithAliasUseCase.execute(originalUrlHashCode, alias, expiresAt);
     }
 
-    final var shortUrl = createHashBasedShortUrl(originalUrl);
+    final var shortUrl = createHashBasedShortUrl(originalUrlHashCode);
     try {
       urlRepository.save(Url.builder()
-          .originalUrl(originalUrl)
+          .originalUrlHashCode(originalUrlHashCode)
           .shortUrl(shortUrl.toString())
           .expiresAt(expiresAt)
           .build());
@@ -52,10 +50,8 @@ public class CreateHashBasedShortUrlUseCase {
     return shortUrl;
   }
 
-  private URI createHashBasedShortUrl(final String originalUrl) {
-    final var bytes = originalUrl.getBytes(StandardCharsets.UTF_8);
-    final var hash = MurmurHash3.hash32x86(bytes, 0, bytes.length, MurmurHash3.DEFAULT_SEED);
-    final var code = Base62Generator.generate(hash);
+  private URI createHashBasedShortUrl(final int originalUrlHashCode) {
+    final var code = Base62Generator.generate(originalUrlHashCode);
     return HttpResponseUtils.buildLocationWithPath(code);
   }
 
